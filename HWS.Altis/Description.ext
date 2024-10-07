@@ -1,0 +1,2339 @@
+author = "Rydygier";
+onLoadName = "HETMAN: War Stories";
+onLoadMission = "War has many faces.";
+overviewText = "Easy in use dynamic battle generator powered by HETMAN AI.";
+overviewPicture = "Pic\hws4.paa";
+loadScreen = "Pic\hws4.paa";
+
+class CfgCommunicationMenu
+	{
+	class HWSSpectator
+		{
+		text = "Spectator mode";
+		submenu = "";
+		expression = "nul = [] spawn RYD_CamSwitchOn;";
+		icon = "";
+		cursor = "";
+		enable = "1";
+		removeAfterExpressionCall = 0;
+		};
+		
+	class HWSNewRole
+		{
+		text = "Randomize new role";
+		submenu = "";
+		expression = "nul = [] spawn RYD_WS_NewRole;";
+		icon = "";
+		cursor = "";
+		enable = "1";
+		removeAfterExpressionCall = 0;
+		};
+		
+	class HWSMarta
+		{
+		text = "Switch miliary markers";
+		submenu = "";
+		expression = "nul = [] spawn RYD_WS_MARTASwitch;";
+		icon = "";
+		cursor = "";
+		enable = "1";
+		removeAfterExpressionCall = 0;
+		};
+		
+	class HWSFT
+		{
+		text = "Switch fatigue effects for all";
+		submenu = "";
+		expression = "nul = [] spawn RYD_WS_FatigueSwitch";
+		icon = "";
+		cursor = "";
+		enable = "1";
+		removeAfterExpressionCall = 0;
+		};
+	};
+	
+class CfgDebriefingSections
+	{
+	class Endreason
+		{
+		title = "Result";
+		variable = "RYD_WS_Reason";
+		};
+	
+	class KIA_list
+		{
+		title = "KIA";
+		variable = "RYD_WS_KIA_list";
+		};
+		
+	class Wounded_list
+		{
+		title = "WIA";
+		variable = "RYD_WS_WIA_list";
+		};
+		
+	class Kills_list
+		{
+		title = "Kills";
+		variable = "RYD_WS_Kills_list";
+		};
+		
+	class Awarded_list
+		{
+		title = "Awarded";
+		variable = "RYD_WS_Awarded_list";
+		};
+		
+	class Indicted_list
+		{
+		title = "Indicted";
+		variable = "RYD_WS_Indicted_list";
+		};
+	};
+
+#include "GUI.hpp"
+
+class CfgRadio
+	{
+	sounds[] = {};
+	class HAC_OrdConf1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdConf1v1.ogg", 1, 1};
+		title = "Roger that - Out.";
+		};
+
+	class HAC_OrdConf2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdConf2v1.ogg", 1, 1};
+		title = "Affirmative - Out.";
+		};
+
+	class HAC_OrdConf3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Acknowledged - Out.";
+		};
+
+	class HAC_OrdConf4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdConf4v1.ogg", 1, 1};
+		title = "I'm on it - Out.";
+		};
+
+	class HAC_OrdConf5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdConf5v1.ogg", 1, 1};
+		title = "Command, executing orders - Out.";
+		};
+
+
+	class HAC_OrdDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdDen1v1.ogg", 1, 1};
+		title = "Can't do it - Over.";
+		};
+
+	class HAC_OrdDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdDen2v1.ogg", 1, 1};
+		title = "No possible - Over.";
+		};
+
+	class HAC_OrdDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdDen3v1.ogg", 1, 1};
+		title = "Negative - Over.";
+		};
+
+	class HAC_OrdDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdDen4v1.ogg", 1, 1};
+		title = "Impossible - Over.";
+		};
+
+	class HAC_OrdDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdDen5v1.ogg", 1, 1};
+		title = "Command, I cannot comply. Requesting new orders - Over.";
+		};
+
+
+	class HAC_OrdFinal1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdFinal1v1.ogg", 1, 1};
+		title = "Approaching target area - Out.";
+		};
+
+	class HAC_OrdFinal2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdFinal2v1.ogg", 1, 1};
+		title = "We're close to the target point - Out.";
+		};
+
+	class HAC_OrdFinal3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdFinal3v1.ogg", 1, 1};
+		title = "In position - Out.";
+		};
+
+	class HAC_OrdFinal4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdFinal4v1.ogg", 1, 1};
+		title = "We're proceeding to execute the primary task - Out.";
+		};
+
+
+	class HAC_OrdEnd1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdEnd1v1.ogg", 1, 1};
+		title = "Waiting for orders - Over.";
+		};
+
+	class HAC_OrdEnd2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdEnd2v1.ogg", 1, 1};
+		title = "Task complete - Over.";
+		};
+
+	class HAC_OrdEnd3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdEnd3v1.ogg", 1, 1};
+		title = "We're done here - Over.";
+		};
+
+	class HAC_OrdEnd4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdEnd4v1.ogg", 1, 1};
+		title = "Mission objective achieved - Over.";
+		};
+
+	class HAC_OrdEnd5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OrdEnd5v1.ogg", 1, 1};
+		title = "Command, we're awaiting orders - Over.";
+		};
+
+
+	class HAC_SuppReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppReq1v1.ogg", 1, 1};
+		title = "We need resupply - Over.";
+		};
+
+	class HAC_SuppReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppReq2v1.ogg", 1, 1};
+		title = "Request logistic support - Over.";
+		};
+
+	class HAC_SuppReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppReq3v1.ogg", 1, 1};
+		title = "We could use some supplies at our location - Over.";
+		};
+
+	class HAC_SuppReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppReq4v1.ogg", 1, 1};
+		title = "Our supplies are low - Over.";
+		};
+
+	class HAC_SuppReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppReq5v1.ogg", 1, 1};
+		title = "Command, requesting support - Over.";
+		};
+
+
+
+	class HAC_MedReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\MedReq1v1.ogg", 1, 1};
+		title = "We need a Medevac! - Over.";
+		};
+
+	class HAC_MedReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\MedReq2v1.ogg", 1, 1};
+		title = "Requesting Medevac - Over.";
+		};
+
+	class HAC_MedReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\MedReq3v1.ogg", 1, 1};
+		title = "We need immediate Medevac - Over.";
+		};
+
+	class HAC_MedReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\MedReq4v1.ogg", 1, 1};
+		title = "We need medical support - Over.";
+		};
+
+	class HAC_MedReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\MedReq5v1.ogg", 1, 1};
+		title = "Command, requesting medevac - Over.";
+		};
+
+
+
+	class HAC_ArtyReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtyReq1v1.ogg", 1, 1};
+		title = "Requesting fire mission on transmitted coordinates - Over.";
+		};
+
+	class HAC_ArtyReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtyReq2v1.ogg", 1, 1};
+		title = "We need artillery on target position - Over.";
+		};
+
+	class HAC_ArtyReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtyReq3v1.ogg", 1, 1};
+		title = "Give us some fire support!";
+		};
+
+	class HAC_ArtyReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtyReq4v1.ogg", 1, 1};
+		title = "A few artillery shells will be appreciated here - Over.";
+		};
+
+	class HAC_ArtyReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtyReq5v1.ogg", 1, 1};
+		title = "Command, requesting fire mission on previous coordinates - Over.";
+		};
+
+
+
+	class HAC_SmokeReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SmokeReq1v1.ogg", 1, 1};
+		title = "Requesting smoke cover to withdraw - Over.";
+		};
+
+	class HAC_SmokeReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SmokeReq2v1.ogg", 1, 1};
+		title = "Needed smoke screen on our position - Over.";
+		};
+
+	class HAC_SmokeReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SmokeReq3v1.ogg", 1, 1};
+		title = "We're falling back. Give us smoke - Over.";
+		};
+
+	class HAC_SmokeReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SmokeReq4v1.ogg", 1, 1};
+		title = "We need concealment. Requesting smoke - Over.";
+		};
+
+
+	class HAC_IllumReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\IllumReq1v1.ogg", 1, 1};
+		title = "Probable enemy presence on field. Requesting illumination - Over.";
+		};
+
+	class HAC_IllumReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\IllumReq2v1.ogg", 1, 1};
+		title = "Illumination needed at our coordinates - Over.";
+		};
+
+	class HAC_IllumReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\IllumReq3v1.ogg", 1, 1};
+		title = "Need illumination on our last position - Over.";
+		};
+
+	class HAC_IllumReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\IllumReq4v1.ogg", 1, 1};
+		title = "We hear them. Some illum rounds could be useful here - Over.";
+		};
+
+	class HAC_InDanger1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger1v1.ogg", 1, 1};
+		title = "They're coming!";
+		};
+
+	class HAC_InDanger2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger2v1.ogg", 1, 1};
+		title = "We're under fire!";
+		};
+
+	class HAC_InDanger3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger3v1.ogg", 1, 1};
+		title = "Enemy is close!";
+		};
+
+	class HAC_InDanger4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger4v1.ogg", 1, 1};
+		title = "They are shooting at us!";
+		};
+
+	class HAC_InDanger5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger5v1.ogg", 1, 1};
+		title = "We are pinned down!";
+		};
+
+	class HAC_InDanger6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger6v1.ogg", 1, 1};
+		title = "Open fire!";
+		};
+
+	class HAC_InDanger7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger7v1.ogg", 1, 1};
+		title = "The enemy is approaching our position!";
+		};
+
+	class HAC_InDanger8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger8v1.ogg", 1, 1};
+		title = "Do not let them flank us!";
+		};
+
+	class HAC_InDanger9
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger9v1.ogg", 1, 1};
+		title = "We must stop them at any cost!";
+		};
+
+	class HAC_InDanger10
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger10v1.ogg", 1, 1};
+		title = "Give'em hell!";
+		};
+
+	class HAC_InDanger11
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger11v1.ogg", 1, 1};
+		title = "Keep your heads down, dammit!";
+		};
+ 
+	class HAC_InDanger12
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger12v1.ogg", 1, 1};
+		title = "Fire at will!";
+		};
+
+	class HAC_InDanger13
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InDanger13v1.ogg", 1, 1};
+		title = "Command, we're in danger - Over.";
+		};
+
+
+
+	class HAC_EnemySpot1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\EnemySpot1v1.ogg", 1, 1};
+		title = "Enemy spotted - Over.";
+		};
+
+	class HAC_EnemySpot2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\EnemySpot2v1.ogg", 1, 1};
+		title = "We're observing hostiles - Over.";
+		};
+
+	class HAC_EnemySpot3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\EnemySpot3v1.ogg", 1, 1};
+		title = "Enemy forces at designated coordinates - Over.";
+		};
+
+	class HAC_EnemySpot4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\EnemySpot4v1.ogg", 1, 1};
+		title = "Hostile presence in this area - Over.";
+		};
+
+	class HAC_EnemySpot5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\EnemySpot5v1.ogg", 1, 1};
+		title = "Command, hostiles spotted near target location - Over.";
+		};
+
+
+	class HAC_InFear1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InFear1v1.ogg", 1, 1};
+		title = "We have no chance!";
+		};
+
+	class HAC_InFear2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InFear2v1.ogg", 1, 1};
+		title = "Regroup!";
+		};
+
+	class HAC_InFear3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InFear3v1.ogg", 1, 1};
+		title = "Enemy is overwhelming!";
+		};
+
+	class HAC_InFear4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InFear4v1.ogg", 1, 1};
+		title = "There's too many of them!";
+		};
+
+	class HAC_InFear5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InFear5v1.ogg", 1, 1};
+		title = "Don't let us die here!";
+		};
+
+	class HAC_InFear6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InFear6v1.ogg", 1, 1};
+		title = "We're outnumbered!";
+		};
+
+	class HAC_InFear7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InFear7v1.ogg", 1, 1};
+		title = "We need help!";
+		};
+
+	class HAC_InFear8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InFear8v1.ogg", 1, 1};
+		title = "We can't hold this position!";
+		};
+
+
+
+	class HAC_InPanic1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InPanic1v1.ogg", 1, 1};
+		title = "The hell with this!";
+		};
+
+	class HAC_InPanic2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InPanic2v1.ogg", 1, 1};
+		title = "Run!";
+		};
+
+	class HAC_InPanic3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InPanic3v1.ogg", 1, 1};
+		title = "We can't stand it any more!";
+		};
+
+	class HAC_InPanic4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InPanic4v1.ogg", 1, 1};
+		title = "We're out of here!";
+		};
+
+	class HAC_InPanic5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InPanic5v1.ogg", 1, 1};
+		title = "We all going to die!";
+		};
+
+	class HAC_InPanic6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InPanic6v1.ogg", 1, 1};
+		title = "We need to run!";
+		};
+
+	class HAC_InPanic7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InPanic7v1.ogg", 1, 1};
+		title = "It's hopeless!";
+		};
+
+	class HAC_InPanic8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\InPanic8v1.ogg", 1, 1};
+		title = "I'm not dying here!";
+		};
+
+
+	class HAC_SuppAss1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppAss1v1.ogg", 1, 1};
+		title = "Support on the way - Out.";
+		};
+
+	class HAC_SuppAss2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppAss2v1.ogg", 1, 1};
+		title = "Support is inbound. Hold on - Out.";
+		};
+
+	class HAC_SuppAss3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppAss3v1.ogg", 1, 1};
+		title = "Support is redirected to your position - Out.";
+		};
+
+	class HAC_SuppAss4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppAss4v1.ogg", 1, 1};
+		title = "Supplies en route - Out.";
+		};
+
+	class HAC_SuppAss5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppAss5v1.ogg", 1, 1};
+		title = "Support en route to you - Out.";
+		};
+
+
+
+	class HAC_SuppDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppDen1v1.ogg", 1, 1};
+		title = "Support not possible at the moment - Out.";
+		};
+
+	class HAC_SuppDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppDen2v1.ogg", 1, 1};
+		title = "Negative, support is unavailable - Out.";
+		};
+
+	class HAC_SuppDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppDen3v1.ogg", 1, 1};
+		title = "Support denied, the situation is preventing support rigt now - Out.";
+		};
+
+	class HAC_SuppDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppDen4v1.ogg", 1, 1};
+		title = "Negative, we have no support vehicles available - Out.";
+		};
+
+	class HAC_SuppDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\SuppDen5v1.ogg", 1, 1};
+		title = "Negative, request denied. I cannot provide support right now - Out.";
+		};
+
+
+
+	class HAC_ArtAss1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtAss1v1.ogg", 1, 1};
+		title = "Artillery support assigned - Out.";
+		};
+
+	class HAC_ArtAss2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtAss2v1.ogg", 1, 1};
+		title = "Prepare for artillery barrage - Out.";
+		};
+
+	class HAC_ArtAss3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtAss3v1.ogg", 1, 1};
+		title = "Fire Mission accepted. Wait for the fireworks - Out.";
+		};
+
+	class HAC_ArtAss4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtAss4v1.ogg", 1, 1};
+		title = "Preparing artillery fire mission. Dig in! - Out.";
+		};
+
+	class HAC_ArtAss5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtAss5v1.ogg", 1, 1};
+		title = "Fire mission on coordinates - Out.";
+		};
+
+
+	class HAC_ArtDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtDen1v1.ogg", 1, 1};
+		title = "Negative, we have no available artillery battery - Out.";
+		};
+
+	class HAC_ArtDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtDen2v1.ogg", 1, 1};
+		title = "Fire mission impossible at this time - Out.";
+		};
+
+	class HAC_ArtDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtDen3v1.ogg", 1, 1};
+		title = "Negative, all batteries are busy right now - Out.";
+		};
+
+	class HAC_ArtDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtDen4v1.ogg", 1, 1};
+		title = "Fire mission request denied. There's too much risk - Out.";
+		};
+
+	class HAC_ArtDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtDen5v1.ogg", 1, 1};
+		title = "Negative, request denied. No fire missions are available - Out.";
+		};
+
+
+	class HAC_OffStance1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\OffStance1v1.ogg", 1, 1};
+		title = "To all groups: perform Oscar Foxtrot. I Say Again: Oscar Foxtrot.";
+		};
+
+	class HAC_DefStance1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\DefStance1v1.ogg", 1, 1};
+		title = "To all groups: perform Delta Foxtrot. I Say Again: Delta Foxtrot";
+		};
+
+
+	class HAC_ArtFire1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtFire1v1.ogg", 1, 1};
+		title = "Firing for effect! - Out.";
+		};
+
+	class HAC_ArtFire2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtFire2v1.ogg", 1, 1};
+		title = "Shells on the way! - Out.";
+		};
+
+	class HAC_ArtFire3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtFire3v1.ogg", 1, 1};
+		title = "Fire mission in progress - Out.";
+		};
+
+	class HAC_ArtFire4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtFire4v1.ogg", 1, 1};
+		title = "Shells away - Out.";
+		};
+
+	class HAC_ArtFire5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice1\ArtFire5v1.ogg", 1, 1};
+		title = "Fire Mission received on target location - Out.";
+		};
+
+
+
+	class v2HAC_OrdConf1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdConf1v2.ogg", 1, 1};
+		title = "Roger that - Out.";
+		};
+
+	class v2HAC_OrdConf2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdConf2v2.ogg", 1, 1};
+		title = "Affirmative - Out.";
+		};
+
+	class v2HAC_OrdConf3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Acknowledged - Out.";
+		};
+
+	class v2HAC_OrdConf4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdConf4v2.ogg", 1, 1};
+		title = "I'm on it - Out.";
+		};
+
+	class v2HAC_OrdConf5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdConf5v2.ogg", 1, 1};
+		title = "Command, executing orders - Out.";
+		};
+
+
+	class v2HAC_OrdDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdDen1v2.ogg", 1, 1};
+		title = "Can't do it - Over.";
+		};
+
+	class v2HAC_OrdDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdDen2v2.ogg", 1, 1};
+		title = "No possible - Over.";
+		};
+
+	class v2HAC_OrdDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdDen3v2.ogg", 1, 1};
+		title = "Negative - Over.";
+		};
+
+	class v2HAC_OrdDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdDen4v2.ogg", 1, 1};
+		title = "Impossible - Over.";
+		};
+
+	class v2HAC_OrdDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdDen5v2.ogg", 1, 1};
+		title = "Command, I cannot comply. Requesting new orders - Over.";
+		};
+
+
+	class v2HAC_OrdFinal1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdFinal1v2.ogg", 1, 1};
+		title = "Approaching target area - Out.";
+		};
+
+	class v2HAC_OrdFinal2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdFinal2v2.ogg", 1, 1};
+		title = "We're close to the target point - Out.";
+		};
+
+	class v2HAC_OrdFinal3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdFinal3v2.ogg", 1, 1};
+		title = "In position - Out.";
+		};
+
+	class v2HAC_OrdFinal4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdFinal4v2.ogg", 1, 1};
+		title = "We're proceeding to execute the primary task - Out.";
+		};
+
+
+	class v2HAC_OrdEnd1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdEnd1v2.ogg", 1, 1};
+		title = "Waiting for orders - Over.";
+		};
+
+	class v2HAC_OrdEnd2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdEnd2v2.ogg", 1, 1};
+		title = "Task complete - Over.";
+		};
+
+	class v2HAC_OrdEnd3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdEnd3v2.ogg", 1, 1};
+		title = "We're done here - Over.";
+		};
+
+	class v2HAC_OrdEnd4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdEnd4v2.ogg", 1, 1};
+		title = "Mission objective achieved - Over.";
+		};
+
+	class v2HAC_OrdEnd5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OrdEnd5v2.ogg", 1, 1};
+		title = "Command, we're awaiting orders - Over.";
+		};
+
+
+	class v2HAC_SuppReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppReq1v2.ogg", 1, 1};
+		title = "We need resupply - Over.";
+		};
+
+	class v2HAC_SuppReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppReq2v2.ogg", 1, 1};
+		title = "Request logistic support - Over.";
+		};
+
+	class v2HAC_SuppReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppReq3v2.ogg", 1, 1};
+		title = "We could use some supplies at our location - Over.";
+		};
+
+	class v2HAC_SuppReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppReq4v2.ogg", 1, 1};
+		title = "Our supplies are low - Over.";
+		};
+
+	class v2HAC_SuppReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppReq5v2.ogg", 1, 1};
+		title = "Command, requesting support - Over.";
+		};
+
+
+
+	class v2HAC_MedReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\MedReq1v2.ogg", 1, 1};
+		title = "We need a Medevac! - Over.";
+		};
+
+	class v2HAC_MedReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\MedReq2v2.ogg", 1, 1};
+		title = "Requesting Medevac - Over.";
+		};
+
+	class v2HAC_MedReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\MedReq3v2.ogg", 1, 1};
+		title = "We need immediate Medevac - Over.";
+		};
+
+	class v2HAC_MedReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\MedReq4v2.ogg", 1, 1};
+		title = "We need medical support - Over.";
+		};
+
+	class v2HAC_MedReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\MedReq5v2.ogg", 1, 1};
+		title = "Command, requesting medevac - Over.";
+		};
+
+
+
+	class v2HAC_ArtyReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtyReq1v2.ogg", 1, 1};
+		title = "Requesting fire mission on transmitted coordinates - Over.";
+		};
+
+	class v2HAC_ArtyReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtyReq2v2.ogg", 1, 1};
+		title = "We need artillery on target position - Over.";
+		};
+
+	class v2HAC_ArtyReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtyReq3v2.ogg", 1, 1};
+		title = "Give us some fire support!";
+		};
+
+	class v2HAC_ArtyReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtyReq4v2.ogg", 1, 1};
+		title = "A few artillery shells will be appreciated here - Over.";
+		};
+
+	class v2HAC_ArtyReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtyReq5v2.ogg", 1, 1};
+		title = "Command, requesting fire mission on previous coordinates - Over.";
+		};
+
+
+
+	class v2HAC_SmokeReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SmokeReq1v2.ogg", 1, 1};
+		title = "Requesting smoke cover to withdraw - Over.";
+		};
+
+	class v2HAC_SmokeReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SmokeReq2v2.ogg", 1, 1};
+		title = "Needed smoke screen on our position - Over.";
+		};
+
+	class v2HAC_SmokeReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SmokeReq3v2.ogg", 1, 1};
+		title = "We're falling back. Give us smoke - Over.";
+		};
+
+	class v2HAC_SmokeReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SmokeReq4v2.ogg", 1, 1};
+		title = "We need concealment. Requesting smoke - Over.";
+		};
+
+
+	class v2HAC_IllumReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\IllumReq1v2.ogg", 1, 1};
+		title = "Probable enemy presence on field. Requesting illumination - Over.";
+		};
+
+	class v2HAC_IllumReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\IllumReq2v2.ogg", 1, 1};
+		title = "Illumination needed at our coordinates - Over.";
+		};
+
+	class v2HAC_IllumReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\IllumReq3v2.ogg", 1, 1};
+		title = "Need illumination on our last position - Over.";
+		};
+
+	class v2HAC_IllumReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\IllumReq4v2.ogg", 1, 1};
+		title = "We hear them. Some illum rounds could be useful here - Over.";
+		};
+
+
+	class v2HAC_InDanger1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger1v2.ogg", 1, 1};
+		title = "They're coming!";
+		};
+
+	class v2HAC_InDanger2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger2v2.ogg", 1, 1};
+		title = "We're under fire!";
+		};
+
+	class v2HAC_InDanger3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger3v2.ogg", 1, 1};
+		title = "Enemy is close!";
+		};
+
+	class v2HAC_InDanger4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger4v2.ogg", 1, 1};
+		title = "They are shooting at us!";
+		};
+
+	class v2HAC_InDanger5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger5v2.ogg", 1, 1};
+		title = "We are pinned down!";
+		};
+
+	class v2HAC_InDanger6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger6v2.ogg", 1, 1};
+		title = "Open fire!";
+		};
+
+	class v2HAC_InDanger7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger7v2.ogg", 1, 1};
+		title = "The enemy is approaching our position!";
+		};
+
+	class v2HAC_InDanger8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger8v2.ogg", 1, 1};
+		title = "Do not let them flank us!";
+		};
+
+	class v2HAC_InDanger9
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger9v2.ogg", 1, 1};
+		title = "We must stop them at any cost!";
+		};
+
+	class v2HAC_InDanger10
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger10v2.ogg", 1, 1};
+		title = "Give'em hell!";
+		};
+
+	class v2HAC_InDanger11
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger11v2.ogg", 1, 1};
+		title = "Keep your heads down, dammit!";
+		};
+ 
+	class v2HAC_InDanger12
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger12v2.ogg", 1, 1};
+		title = "Fire at will!";
+		};
+
+	class v2HAC_InDanger13
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InDanger13v2.ogg", 1, 1};
+		title = "Command, we're in danger - Over.";
+		};
+
+
+
+	class v2HAC_EnemySpot1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\EnemySpot1v2.ogg", 1, 1};
+		title = "Enemy spotted - Over.";
+		};
+
+	class v2HAC_EnemySpot2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\EnemySpot2v2.ogg", 1, 1};
+		title = "We're observing hostiles - Over.";
+		};
+
+	class v2HAC_EnemySpot3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\EnemySpot3v2.ogg", 1, 1};
+		title = "Enemy forces at designated coordinates - Over.";
+		};
+
+	class v2HAC_EnemySpot4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\EnemySpot4v2.ogg", 1, 1};
+		title = "Hostile presence in this area - Over.";
+		};
+
+	class v2HAC_EnemySpot5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\EnemySpot5v2.ogg", 1, 1};
+		title = "Command, hostiles spotted near target location - Over.";
+		};
+
+
+	class v2HAC_InFear1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InFear1v2.ogg", 1, 1};
+		title = "We have no chance!";
+		};
+
+	class v2HAC_InFear2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InFear2v2.ogg", 1, 1};
+		title = "Regroup!";
+		};
+
+	class v2HAC_InFear3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InFear3v2.ogg", 1, 1};
+		title = "Enemy is overwhelming!";
+		};
+
+	class v2HAC_InFear4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InFear4v2.ogg", 1, 1};
+		title = "There's too many of them!";
+		};
+
+	class v2HAC_InFear5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InFear5v2.ogg", 1, 1};
+		title = "Don't let us die here!";
+		};
+
+	class v2HAC_InFear6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InFear6v2.ogg", 1, 1};
+		title = "We're outnumbered!";
+		};
+
+	class v2HAC_InFear7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InFear7v2.ogg", 1, 1};
+		title = "We need help!";
+		};
+
+	class v2HAC_InFear8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InFear8v2.ogg", 1, 1};
+		title = "We can't hold this position!";
+		};
+
+
+
+	class v2HAC_InPanic1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InPanic1v2.ogg", 1, 1};
+		title = "The hell with this!";
+		};
+
+	class v2HAC_InPanic2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InPanic2v2.ogg", 1, 1};
+		title = "Run!";
+		};
+
+	class v2HAC_InPanic3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InPanic3v2.ogg", 1, 1};
+		title = "We can't stand it any more!";
+		};
+
+	class v2HAC_InPanic4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InPanic4v2.ogg", 1, 1};
+		title = "We're out of here!";
+		};
+
+	class v2HAC_InPanic5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InPanic5v2.ogg", 1, 1};
+		title = "We all going to die!";
+		};
+
+	class v2HAC_InPanic6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InPanic6v2.ogg", 1, 1};
+		title = "We need to run!";
+		};
+
+	class v2HAC_InPanic7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InPanic7v2.ogg", 1, 1};
+		title = "It's hopeless!";
+		};
+
+	class v2HAC_InPanic8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\InPanic8v2.ogg", 1, 1};
+		title = "I'm not dying here!";
+		};
+
+
+	class v2HAC_SuppAss1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppAss1v2.ogg", 1, 1};
+		title = "Support on the way - Out.";
+		};
+
+	class v2HAC_SuppAss2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppAss2v2.ogg", 1, 1};
+		title = "Support is inbound. Hold on - Out.";
+		};
+
+	class v2HAC_SuppAss3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppAss3v2.ogg", 1, 1};
+		title = "Support is redirected to your position - Out.";
+		};
+
+	class v2HAC_SuppAss4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppAss4v2.ogg", 1, 1};
+		title = "Supplies en route - Out.";
+		};
+
+	class v2HAC_SuppAss5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppAss5v2.ogg", 1, 1};
+		title = "Support en route to you - Out.";
+		};
+
+
+
+	class v2HAC_SuppDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppDen1v2.ogg", 1, 1};
+		title = "Support not possible at the moment - Out.";
+		};
+
+	class v2HAC_SuppDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppDen2v2.ogg", 1, 1};
+		title = "Negative, support is unavailable - Out.";
+		};
+
+	class v2HAC_SuppDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppDen3v2.ogg", 1, 1};
+		title = "Support denied, the situation is preventing support rigt now - Out.";
+		};
+
+	class v2HAC_SuppDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppDen4v2.ogg", 1, 1};
+		title = "Negative, we have no support vehicles available - Out.";
+		};
+
+	class v2HAC_SuppDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\SuppDen5v2.ogg", 1, 1};
+		title = "Negative, request denied. I cannot provide support right now - Out.";
+		};
+
+
+
+	class v2HAC_ArtAss1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtAss1v2.ogg", 1, 1};
+		title = "Artillery support assigned - Out.";
+		};
+
+	class v2HAC_ArtAss2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtAss2v2.ogg", 1, 1};
+		title = "Prepare for artillery barrage - Out.";
+		};
+
+	class v2HAC_ArtAss3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtAss3v2.ogg", 1, 1};
+		title = "Fire Mission accepted. Wait for the fireworks - Out.";
+		};
+
+	class v2HAC_ArtAss4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtAss4v2.ogg", 1, 1};
+		title = "Preparing artillery fire mission. Dig in! - Out.";
+		};
+
+	class v2HAC_ArtAss5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtAss5v2.ogg", 1, 1};
+		title = "Fire mission on coordinates - Out.";
+		};
+
+
+	class v2HAC_ArtDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtDen1v2.ogg", 1, 1};
+		title = "Negative, we have no available artillery battery - Out.";
+		};
+
+	class v2HAC_ArtDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtDen2v2.ogg", 1, 1};
+		title = "Fire mission impossible at this time - Out.";
+		};
+
+	class v2HAC_ArtDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtDen3v2.ogg", 1, 1};
+		title = "Negative, all batteries are busy right now - Out.";
+		};
+
+	class v2HAC_ArtDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtDen4v2.ogg", 1, 1};
+		title = "Fire mission request denied. There's too much risk - Out.";
+		};
+
+	class v2HAC_ArtDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtDen5v2.ogg", 1, 1};
+		title = "Negative, request denied. No fire missions are available - Out.";
+		};
+
+
+	class v2HAC_OffStance1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\OffStance1v2.ogg", 1, 1};
+		title = "To all groups: perform Oscar Foxtrot. I Say Again: Oscar Foxtrot.";
+		};
+
+	class v2HAC_DefStance1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\DefStance1v2.ogg", 1, 1};
+		title = "To all groups: perform Delta Foxtrot. I Say Again: Delta Foxtrot";
+		};
+
+
+	class v2HAC_ArtFire1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtFire1v2.ogg", 1, 1};
+		title = "Firing for effect! - Out.";
+		};
+
+	class v2HAC_ArtFire2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtFire2v2.ogg", 1, 1};
+		title = "Shells on the way! - Out.";
+		};
+
+	class v2HAC_ArtFire3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtFire3v2.ogg", 1, 1};
+		title = "Fire mission in progress - Out.";
+		};
+
+	class v2HAC_ArtFire4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtFire4v2.ogg", 1, 1};
+		title = "Shells away - Out.";
+		};
+
+	class v2HAC_ArtFire5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice2\ArtFire5v2.ogg", 1, 1};
+		title = "Fire Mission received on target location - Out.";
+		};
+
+
+
+	class v3HAC_OrdConf1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdConf1v3.ogg", 1, 1};
+		title = "Roger that - Out.";
+		};
+
+	class v3HAC_OrdConf2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdConf2v3.ogg", 1, 1};
+		title = "Affirmative - Out.";
+		};
+
+	class v3HAC_OrdConf3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Static2ss.ogg", 1, 1};
+		title = "Acknowledged - Out.";
+		};
+
+	class v3HAC_OrdConf4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdConf4v3.ogg", 1, 1};
+		title = "I'm on it - Out.";
+		};
+
+	class v3HAC_OrdConf5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdConf5v3.ogg", 1, 1};
+		title = "Command, executing orders - Out.";
+		};
+
+
+	class v3HAC_OrdDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdDen1v3.ogg", 1, 1};
+		title = "Can't do it - Over.";
+		};
+
+	class v3HAC_OrdDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdDen2v3.ogg", 1, 1};
+		title = "No possible - Over.";
+		};
+
+	class v3HAC_OrdDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdDen3v3.ogg", 1, 1};
+		title = "Negative - Over.";
+		};
+
+	class v3HAC_OrdDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdDen4v3.ogg", 1, 1};
+		title = "Impossible - Over.";
+		};
+
+	class v3HAC_OrdDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdDen5v3.ogg", 1, 1};
+		title = "Command, I cannot comply. Requesting new orders - Over.";
+		};
+
+
+	class v3HAC_OrdFinal1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdFinal1v3.ogg", 1, 1};
+		title = "Approaching target area - Out.";
+		};
+
+	class v3HAC_OrdFinal2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdFinal2v3.ogg", 1, 1};
+		title = "We're close to the target point - Out.";
+		};
+
+	class v3HAC_OrdFinal3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdFinal3v3.ogg", 1, 1};
+		title = "In position - Out.";
+		};
+
+	class v3HAC_OrdFinal4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdFinal4v3.ogg", 1, 1};
+		title = "We're proceeding to execute the primary task - Out.";
+		};
+
+
+	class v3HAC_OrdEnd1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdEnd1v3.ogg", 1, 1};
+		title = "Waiting for orders - Over.";
+		};
+
+	class v3HAC_OrdEnd2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdEnd2v3.ogg", 1, 1};
+		title = "Task complete - Over.";
+		};
+
+	class v3HAC_OrdEnd3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdEnd3v3.ogg", 1, 1};
+		title = "We're done here - Over.";
+		};
+
+	class v3HAC_OrdEnd4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdEnd4v3.ogg", 1, 1};
+		title = "Mission objective achieved - Over.";
+		};
+
+	class v3HAC_OrdEnd5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OrdEnd5v3.ogg", 1, 1};
+		title = "Command, we're awaiting orders - Over.";
+		};
+
+
+	class v3HAC_SuppReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppReq1v3.ogg", 1, 1};
+		title = "We need resupply - Over.";
+		};
+
+	class v3HAC_SuppReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppReq2v3.ogg", 1, 1};
+		title = "Request logistic support - Over.";
+		};
+
+	class v3HAC_SuppReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppReq3v3.ogg", 1, 1};
+		title = "We could use some supplies at our location - Over.";
+		};
+
+	class v3HAC_SuppReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppReq4v3.ogg", 1, 1};
+		title = "Our supplies are low - Over.";
+		};
+
+	class v3HAC_SuppReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppReq5v3.ogg", 1, 1};
+		title = "Command, requesting support - Over.";
+		};
+
+
+
+	class v3HAC_MedReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\MedReq1v3.ogg", 1, 1};
+		title = "We need a Medevac! - Over.";
+		};
+
+	class v3HAC_MedReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\MedReq2v3.ogg", 1, 1};
+		title = "Requesting Medevac - Over.";
+		};
+
+	class v3HAC_MedReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\MedReq3v3.ogg", 1, 1};
+		title = "We need immediate Medevac - Over.";
+		};
+
+	class v3HAC_MedReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\MedReq4v3.ogg", 1, 1};
+		title = "We need medical support - Over.";
+		};
+
+	class v3HAC_MedReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\MedReq5v3.ogg", 1, 1};
+		title = "Command, requesting medevac - Over.";
+		};
+
+
+
+	class v3HAC_ArtyReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtyReq1v3.ogg", 1, 1};
+		title = "Requesting fire mission on transmitted coordinates - Over.";
+		};
+
+	class v3HAC_ArtyReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtyReq2v3.ogg", 1, 1};
+		title = "We need artillery on target position - Over.";
+		};
+
+	class v3HAC_ArtyReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtyReq3v3.ogg", 1, 1};
+		title = "Give us some fire support!";
+		};
+
+	class v3HAC_ArtyReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtyReq4v3.ogg", 1, 1};
+		title = "A few artillery shells will be appreciated here - Over.";
+		};
+
+	class v3HAC_ArtyReq5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtyReq5v3.ogg", 1, 1};
+		title = "Command, requesting fire mission on previous coordinates - Over.";
+		};
+
+
+
+	class v3HAC_SmokeReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SmokeReq1v3.ogg", 1, 1};
+		title = "Requesting smoke cover to withdraw - Over.";
+		};
+
+	class v3HAC_SmokeReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SmokeReq2v3.ogg", 1, 1};
+		title = "Needed smoke screen on our position - Over.";
+		};
+
+	class v3HAC_SmokeReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SmokeReq3v3.ogg", 1, 1};
+		title = "We're falling back. Give us smoke - Over.";
+		};
+
+	class v3HAC_SmokeReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SmokeReq4v3.ogg", 1, 1};
+		title = "We need concealment. Requesting smoke - Over.";
+		};
+
+
+	class v3HAC_IllumReq1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\IllumReq1v3.ogg", 1, 1};
+		title = "Probable enemy presence on field. Requesting illumination - Over.";
+		};
+
+	class v3HAC_IllumReq2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\IllumReq2v3.ogg", 1, 1};
+		title = "Illumination needed at our coordinates - Over.";
+		};
+
+	class v3HAC_IllumReq3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\IllumReq3v3.ogg", 1, 1};
+		title = "Need illumination on our last position - Over.";
+		};
+
+	class v3HAC_IllumReq4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\IllumReq4v3.ogg", 1, 1};
+		title = "We hear them. Some illum rounds could be useful here - Over.";
+		};
+
+
+	class v3HAC_InDanger1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger1v3.ogg", 1, 1};
+		title = "They're coming!";
+		};
+
+	class v3HAC_InDanger2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger2v3.ogg", 1, 1};
+		title = "We're under fire!";
+		};
+
+	class v3HAC_InDanger3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger3v3.ogg", 1, 1};
+		title = "Enemy is close!";
+		};
+
+	class v3HAC_InDanger4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger4v3.ogg", 1, 1};
+		title = "They are shooting at us!";
+		};
+
+	class v3HAC_InDanger5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger5v3.ogg", 1, 1};
+		title = "We are pinned down!";
+		};
+
+	class v3HAC_InDanger6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger6v3.ogg", 1, 1};
+		title = "Open fire!";
+		};
+
+	class v3HAC_InDanger7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger7v3.ogg", 1, 1};
+		title = "The enemy is approaching our position!";
+		};
+
+	class v3HAC_InDanger8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger8v3.ogg", 1, 1};
+		title = "Do not let them flank us!";
+		};
+
+	class v3HAC_InDanger9
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger9v3.ogg", 1, 1};
+		title = "We must stop them at any cost!";
+		};
+
+	class v3HAC_InDanger10
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger10v3.ogg", 1, 1};
+		title = "Give'em hell!";
+		};
+
+	class v3HAC_InDanger11
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger11v3.ogg", 1, 1};
+		title = "Keep your heads down, dammit!";
+		};
+ 
+	class v3HAC_InDanger12
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger12v3.ogg", 1, 1};
+		title = "Fire at will!";
+		};
+
+	class v3HAC_InDanger13
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InDanger13v3.ogg", 1, 1};
+		title = "Command, we're in danger - Over.";
+		};
+
+
+
+	class v3HAC_EnemySpot1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\EnemySpot1v3.ogg", 1, 1};
+		title = "Enemy spotted - Over.";
+		};
+
+	class v3HAC_EnemySpot2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\EnemySpot2v3.ogg", 1, 1};
+		title = "We're observing hostiles - Over.";
+		};
+
+	class v3HAC_EnemySpot3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\EnemySpot3v3.ogg", 1, 1};
+		title = "Enemy forces at designated coordinates - Over.";
+		};
+
+	class v3HAC_EnemySpot4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\EnemySpot4v3.ogg", 1, 1};
+		title = "Hostile presence in this area - Over.";
+		};
+
+	class v3HAC_EnemySpot5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\EnemySpot5v3.ogg", 1, 1};
+		title = "Command, hostiles spotted near target location - Over.";
+		};
+
+
+	class v3HAC_InFear1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InFear1v3.ogg", 1, 1};
+		title = "We have no chance!";
+		};
+
+	class v3HAC_InFear2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InFear2v3.ogg", 1, 1};
+		title = "Regroup!";
+		};
+
+	class v3HAC_InFear3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InFear3v3.ogg", 1, 1};
+		title = "Enemy is overwhelming!";
+		};
+
+	class v3HAC_InFear4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InFear4v3.ogg", 1, 1};
+		title = "There's too many of them!";
+		};
+
+	class v3HAC_InFear5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InFear5v3.ogg", 1, 1};
+		title = "Don't let us die here!";
+		};
+
+	class v3HAC_InFear6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InFear6v3.ogg", 1, 1};
+		title = "We're outnumbered!";
+		};
+
+	class v3HAC_InFear7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InFear7v3.ogg", 1, 1};
+		title = "We need help!";
+		};
+
+	class v3HAC_InFear8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InFear8v3.ogg", 1, 1};
+		title = "We can't hold this position!";
+		};
+
+
+
+	class v3HAC_InPanic1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InPanic1v3.ogg", 1, 1};
+		title = "The hell with this!";
+		};
+
+	class v3HAC_InPanic2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InPanic2v3.ogg", 1, 1};
+		title = "Run!";
+		};
+
+	class v3HAC_InPanic3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InPanic3v3.ogg", 1, 1};
+		title = "We can't stand it any more!";
+		};
+
+	class v3HAC_InPanic4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InPanic4v3.ogg", 1, 1};
+		title = "We're out of here!";
+		};
+
+	class v3HAC_InPanic5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InPanic5v3.ogg", 1, 1};
+		title = "We all going to die!";
+		};
+
+	class v3HAC_InPanic6
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InPanic6v3.ogg", 1, 1};
+		title = "We need to run!";
+		};
+
+	class v3HAC_InPanic7
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InPanic7v3.ogg", 1, 1};
+		title = "It's hopeless!";
+		};
+
+	class v3HAC_InPanic8
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\InPanic8v3.ogg", 1, 1};
+		title = "I'm not dying here!";
+		};
+
+
+	class v3HAC_SuppAss1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppAss1v3.ogg", 1, 1};
+		title = "Support on the way - Out.";
+		};
+
+	class v3HAC_SuppAss2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppAss2v3.ogg", 1, 1};
+		title = "Support is inbound. Hold on - Out.";
+		};
+
+	class v3HAC_SuppAss3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppAss3v3.ogg", 1, 1};
+		title = "Support is redirected to your position - Out.";
+		};
+
+	class v3HAC_SuppAss4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppAss4v3.ogg", 1, 1};
+		title = "Supplies en route - Out.";
+		};
+
+	class v3HAC_SuppAss5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppAss5v3.ogg", 1, 1};
+		title = "Support en route to you - Out.";
+		};
+
+
+
+	class v3HAC_SuppDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppDen1v3.ogg", 1, 1};
+		title = "Support not possible at the moment - Out.";
+		};
+
+	class v3HAC_SuppDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppDen2v3.ogg", 1, 1};
+		title = "Negative, support is unavailable - Out.";
+		};
+
+	class v3HAC_SuppDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppDen3v3.ogg", 1, 1};
+		title = "Support denied, the situation is preventing support rigt now - Out.";
+		};
+
+	class v3HAC_SuppDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppDen4v3.ogg", 1, 1};
+		title = "Negative, we have no support vehicles available - Out.";
+		};
+
+	class v3HAC_SuppDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\SuppDen5v3.ogg", 1, 1};
+		title = "Negative, request denied. I cannot provide support right now - Out.";
+		};
+
+
+
+	class v3HAC_ArtAss1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtAss1v3.ogg", 1, 1};
+		title = "Artillery support assigned - Out.";
+		};
+
+	class v3HAC_ArtAss2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtAss2v3.ogg", 1, 1};
+		title = "Prepare for artillery barrage - Out.";
+		};
+
+	class v3HAC_ArtAss3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtAss3v3.ogg", 1, 1};
+		title = "Fire Mission accepted. Wait for the fireworks - Out.";
+		};
+
+	class v3HAC_ArtAss4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtAss4v3.ogg", 1, 1};
+		title = "Preparing artillery fire mission. Dig in! - Out.";
+		};
+
+	class v3HAC_ArtAss5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtAss5v3.ogg", 1, 1};
+		title = "Fire mission on coordinates - Out.";
+		};
+
+
+	class v3HAC_ArtDen1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtDen1v3.ogg", 1, 1};
+		title = "Negative, we have no available artillery battery - Out.";
+		};
+
+	class v3HAC_ArtDen2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtDen2v3.ogg", 1, 1};
+		title = "Fire mission impossible at this time - Out.";
+		};
+
+	class v3HAC_ArtDen3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtDen3v3.ogg", 1, 1};
+		title = "Negative, all batteries are busy right now - Out.";
+		};
+
+	class v3HAC_ArtDen4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtDen4v3.ogg", 1, 1};
+		title = "Fire mission request denied. There's too much risk - Out.";
+		};
+
+	class v3HAC_ArtDen5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtDen5v3.ogg", 1, 1};
+		title = "Negative, request denied. No fire missions are available - Out.";
+		};
+
+
+	class v3HAC_OffStance1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\OffStance1v3.ogg", 1, 1};
+		title = "To all groups: perform Oscar Foxtrot. I Say Again: Oscar Foxtrot.";
+		};
+
+	class v3HAC_DefStance1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\DefStance1v3.ogg", 1, 1};
+		title = "To all groups: perform Delta Foxtrot. I Say Again: Delta Foxtrot";
+		};
+
+
+	class v3HAC_ArtFire1
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtFire1v3.ogg", 1, 1};
+		title = "Firing for effect! - Out.";
+		};
+
+	class v3HAC_ArtFire2
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtFire2v3.ogg", 1, 1};
+		title = "Shells on the way! - Out.";
+		};
+
+	class v3HAC_ArtFire3
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtFire3v3.ogg", 1, 1};
+		title = "Fire mission in progress - Out.";
+		};
+
+	class v3HAC_ArtFire4
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtFire4v3.ogg", 1, 1};
+		title = "Shells away - Out.";
+		};
+
+	class v3HAC_ArtFire5
+		{
+		name = "";
+		sound[] = {"\RYD_HAL\Sound\Voice3\ArtFire5v3.ogg", 1, 1};
+		title = "Fire Mission received on target location - Out.";
+		};
+	};

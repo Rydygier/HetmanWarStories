@@ -1,0 +1,378 @@
+version=12;
+class Mission
+{
+	addOns[]=
+	{
+		"a3_map_altis",
+		"A3_Modules_F_Marta",
+		"A3_Modules_F",
+		"A3_Structures_F_Civ_Camping",
+		"A3_Data_F_Curator_Characters",
+		"A3_Structures_F_EPC_Civ_Camping",
+		"A3_Structures_F_Items_Cans"
+	};
+	addOnsAuto[]=
+	{
+		"A3_Data_F_Curator_Characters",
+		"A3_Modules_F_Marta",
+		"A3_Modules_F",
+		"A3_Structures_F_Civ_Camping",
+		"A3_Structures_F_EPC_Civ_Camping",
+		"A3_Structures_F_Items_Cans",
+		"a3_map_altis"
+	};
+	randomSeed=5052849;
+	class Intel
+	{
+		briefingName="HETMAN: War Stories 1.06";
+		overviewText="War has many faces.";
+		startWeather=0.29999998;
+		startWind=0.099999994;
+		startWaves=0.099999994;
+		forecastWeather=0.29999998;
+		forecastWind=0.099999994;
+		forecastWaves=0.099999994;
+		forecastLightnings=0.099999994;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+	class Groups
+	{
+		items=3;
+		class Item0
+		{
+			side="WEST";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={8487.4883,107.12585,25143.295};
+					id=0;
+					side="WEST";
+					vehicle="b_survivor_F";
+					player="PLAYER COMMANDER";
+					leader=1;
+					skill=0.60000002;
+					text="dummyPlayer";
+					init="this linkItem ""itemMap"";this setCaptive true;this allowdamage false";
+				};
+			};
+		};
+		class Item1
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={9494.0029,-70.478676,23722.805};
+					id=1;
+					side="LOGIC";
+					vehicle="MartaManager";
+					leader=1;
+					lock="UNLOCKED";
+					skill=0.60000002;
+					init="setGroupIconsVisible [true,false];";
+				};
+			};
+		};
+		class Item2
+		{
+			side="LOGIC";
+			class Vehicles
+			{
+				items=1;
+				class Item0
+				{
+					position[]={7671.1357,-0.00021388289,24975.629};
+					id=2;
+					side="LOGIC";
+					vehicle="Logic";
+					leader=1;
+					skill=0.60000002;
+					text="RYD_WS_Caller";
+				};
+			};
+		};
+	};
+	class Vehicles
+	{
+		items=3;
+		class Item0
+		{
+			position[]={8494.6162,107.46263,25151.346};
+			id=3;
+			side="EMPTY";
+			vehicle="Land_Sun_chair_F";
+			leader=1;
+			skill=0.60000002;
+			text="sc1";
+		};
+		class Item1
+		{
+			position[]={8493.6582,107.41788,25150.902};
+			id=4;
+			side="EMPTY";
+			vehicle="Land_Sunshade_04_F";
+			skill=0.60000002;
+			text="sc2";
+		};
+		class Item2
+		{
+			position[]={8497.0361,107.459,25150.953};
+			id=5;
+			side="EMPTY";
+			vehicle="Land_Can_V2_F";
+			skill=0.60000002;
+			text="sc3";
+			init="this attachTo [dummyPlayer,[0.07,-0.02,0],""RightHand""];";
+		};
+	};
+	class Sensors
+	{
+		items=14;
+		class Item0
+		{
+			position[]={8143.4204,97.53466,23043.859};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQ_Obj1";
+			class Effects
+			{
+			};
+		};
+		class Item1
+		{
+			position[]={8235.4287,104.86682,23043.859};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQ_Obj2";
+			class Effects
+			{
+			};
+		};
+		class Item2
+		{
+			position[]={8316.6133,103.0266,23054.686};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQ_Obj3";
+			class Effects
+			{
+			};
+		};
+		class Item3
+		{
+			position[]={8403.209,85.592735,23051.979};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQ_Obj4";
+			class Effects
+			{
+			};
+		};
+		class Item4
+		{
+			position[]={8165.0698,103.91283,22938.32};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQB_Obj1";
+			class Effects
+			{
+			};
+		};
+		class Item5
+		{
+			position[]={8257.0771,82.375969,22938.32};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQB_Obj2";
+			class Effects
+			{
+			};
+		};
+		class Item6
+		{
+			position[]={8338.2617,73.187393,22949.146};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQB_Obj3";
+			class Effects
+			{
+			};
+		};
+		class Item7
+		{
+			position[]={8424.8584,49.405704,22946.439};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQB_Obj4";
+			class Effects
+			{
+			};
+		};
+		class Item8
+		{
+			position[]={8150.0068,81.029602,22690.846};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQ_Sec1";
+			class Effects
+			{
+			};
+		};
+		class Item9
+		{
+			position[]={8171.6563,76.565498,22585.307};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQB_Sec1";
+			class Effects
+			{
+			};
+		};
+		class Item10
+		{
+			position[]={8292.2656,79.269363,22717.191};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQ_Sec2";
+			class Effects
+			{
+			};
+		};
+		class Item11
+		{
+			position[]={8313.916,63.043835,22611.652};
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQB_Sec2";
+			class Effects
+			{
+			};
+		};
+		class Item12
+		{
+			position[]={8638.2227,38.362831,22647.98};
+			a=150;
+			b=150;
+			rectangular=1;
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQ_IdleDecoy";
+			class Effects
+			{
+			};
+		};
+		class Item13
+		{
+			position[]={8993.7363,30.636681,22636.809};
+			a=150;
+			b=150;
+			rectangular=1;
+			interruptable=1;
+			age="UNKNOWN";
+			name="RydHQB_IdleDecoy";
+			class Effects
+			{
+			};
+		};
+	};
+};
+class Intro
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=12484630;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};
+class OutroWin
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=5976515;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};
+class OutroLoose
+{
+	addOns[]=
+	{
+		"a3_map_altis"
+	};
+	addOnsAuto[]=
+	{
+		"a3_map_altis"
+	};
+	randomSeed=10744786;
+	class Intel
+	{
+		timeOfChanges=1800.0002;
+		startWeather=0.30000001;
+		startWind=0.1;
+		startWaves=0.1;
+		forecastWeather=0.30000001;
+		forecastWind=0.1;
+		forecastWaves=0.1;
+		forecastLightnings=0.1;
+		year=2035;
+		month=6;
+		day=24;
+		hour=12;
+		minute=0;
+		startFogDecay=0.013;
+		forecastFogDecay=0.013;
+	};
+};
